@@ -1604,18 +1604,35 @@
   /* ─── CONTACT FORM ─────────────────────── */
   window.submitForm = function (e) {
     e.preventDefault();
+    const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdswvNTPY3W-CuLs-7gWpmg9OYAeKejbpZpics16Qbjt6usHQ/formResponse';
+    const v = (id) => (document.getElementById(id).value || '').trim();
+    const sel = document.getElementById('fservice');
+    const service = sel.value ? sel.options[sel.selectedIndex].text : '';
+    const name = v('fname'), email = v('femail'), msg = v('fmsg');
     const btn  = document.getElementById('fBtn');
     const span = document.getElementById('fBtnText');
+    const reset = (ms) => setTimeout(() => { span.textContent = lang === 'ko' ? '보내기' : 'Send Message'; btn.disabled = false; }, ms);
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      span.textContent = lang === 'ko' ? '이름과 이메일을 확인해 주세요.' : 'Please check your name and email.';
+      reset(2500); return;
+    }
+    const data = new FormData();
+    data.append('entry.48485608', name);
+    data.append('entry.1916226938', email);
+    data.append('entry.1671467180', service);
+    data.append('entry.275931528', msg);
     btn.disabled = true;
     span.textContent = lang === 'ko' ? '전송 중...' : 'Sending...';
-    setTimeout(() => {
-      span.textContent = lang === 'ko' ? '전송 완료! 곧 연락드리겠습니다.' : 'Sent! We\'ll be in touch soon.';
-      document.getElementById('cform').reset();
-      setTimeout(() => {
-        span.textContent = lang === 'ko' ? '보내기' : 'Send Message';
-        btn.disabled = false;
-      }, 3500);
-    }, 1600);
+    fetch(FORM_URL, { method: 'POST', mode: 'no-cors', body: data })
+      .then(() => {
+        span.textContent = lang === 'ko' ? '전송 완료! 곧 연락드리겠습니다.' : "Sent! We'll be in touch soon.";
+        document.getElementById('cform').reset();
+        reset(3500);
+      })
+      .catch(() => {
+        span.textContent = lang === 'ko' ? '전송 실패. lumensframe@gmail.com으로 연락 주세요.' : 'Failed. Please email lumensframe@gmail.com';
+        reset(5000);
+      });
   };
 
 })();
