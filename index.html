@@ -581,7 +581,7 @@
       transition: opacity 0.35s, transform 0.35s var(--ease);
     }
     .proj:hover .proj-arrow { opacity: 1; transform: scale(1); }
-    .proj.proj-wide { grid-column: 1 / -1; aspect-ratio: 8/3; }
+    .proj.proj-wide { grid-column: 1 / -1; aspect-ratio: 8/3; display: block; color: inherit; text-decoration: none; }
     .proj.proj-wide .proj-bg { background: #0F1822; }
     .proj.proj-wide .proj-deco svg { width: min(560px, 88%); height: auto; }
     @media (max-width: 640px) { .proj.proj-wide { aspect-ratio: 4/3; } }
@@ -1261,7 +1261,7 @@
       </div>
     </div>
 
-    <div class="proj proj-wide rv">
+    <a class="proj proj-wide rv" href="/work/market-dashboard/" aria-label="데일리 마켓 대시보드 데모 보기">
       <div class="proj-bg"></div>
       <div class="proj-deco" aria-hidden="true">
         <svg width="560" height="210" viewBox="0 0 560 210" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1311,7 +1311,7 @@
       <div class="proj-arrow" aria-hidden="true">
         <svg width="14" height="14" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
       </div>
-    </div>
+    </a>
 
   </div>
 </section>
