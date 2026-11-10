@@ -1817,6 +1817,21 @@
       });
   };
 
+  /* ─── 주소창에 # 가 붙지 않도록 페이지 내 이동 처리 ─── */
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault();
+    const id = a.getAttribute('href');
+    if (id === '#') {
+      if (a.classList.contains('nav-logo')) window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const target = document.querySelector(id);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }
+    history.replaceState(null, '', location.pathname + location.search);
+  });
+
 })();
 </script>
 </body>
